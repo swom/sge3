@@ -44,7 +44,7 @@ def setup(parameters_file_path = None):
     if params['SEED'] is None:
         params['SEED'] = int(datetime.now().microsecond)
 
-    params['EXPERIMENT_NAME'] += "/" + "crossover_prob_" + "/" + "start_mut_prob_" + str(params['PROB_MUTATION']) + "/" + "prob_mut_probs_" + str(params['META_MUT_RATE']) +"/gauss_" + str(params['META_MUT_EFFECT'])
+    params['EXPERIMENT_NAME'] += "/" + "crossover_prob_" + str(params['PROB_CROSSOVER']) + "/" + "start_mut_prob_" + str(params['PROB_MUTATION']) + "/" + "prob_mut_probs_" + str(params['META_MUT_RATE']) +"/gauss_" + str(params['META_MUT_EFFECT'])
 
     logger.prepare_dumps()
     np.random.seed(int(params['SEED']))
