@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --time=12:10:00
 #SBATCH --mem=500MB
-#SBATCH --job-name=psge_job
-#SBATCH --output=logs/psge_job%j.log
+#SBATCH --job-name=sge_job
+#SBATCH --output=logs/sge_job%j.log
 
 
 export PATH=$HOME/.local/bin:$PATH
