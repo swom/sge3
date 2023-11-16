@@ -26,6 +26,7 @@ do
         do
           echo "dev: $dev, meta: $meta, start_mut_rate: $mut, run: $run, crossover_rate: $cr"
           sbatch sending_trillions.sh $dev $meta $run $mut $cr
+        done
       done
     done
   done
