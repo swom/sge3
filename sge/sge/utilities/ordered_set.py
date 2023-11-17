@@ -1,5 +1,5 @@
 import collections
-
+import collections.abc
 
 class OrderedSet(collections.abc.MutableSet):
     """

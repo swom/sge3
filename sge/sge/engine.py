@@ -68,14 +68,17 @@ def meta_mutation(ind):
 def evolutionary_algorithm(evaluation_function=None, parameters_file=None):
     setup(parameters_file_path=parameters_file)
     population = list(make_initial_population())
+    archive = {}
     it = 0
     while it <= params['GENERATIONS']:
         for i in tqdm(population):
             if i['fitness'] is None:
                 evaluate(i, evaluation_function)
+                i['id'] = len(archive)
+                archive[i['id']] = i
         population.sort(key=lambda x: x['fitness'])
-
         logger.evolution_progress(it, population)
+        logger.save_lineage(archive, population, 5)
         new_population = population[:params['ELITISM']]
         while len(new_population) < params['POPSIZE']:
             if np.random.uniform() < params['PROB_CROSSOVER']:

@@ -47,3 +47,31 @@ def prepare_dumps():
     except FileExistsError as e:
         pass
     save_parameters()
+
+def save_lineage(archive, population, num_inds):
+    to_save = []
+    evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)[-num_inds:]#first index is best ind which is always recorded so we can exclude it
+    lineages = []
+    lineage_count = 0
+    print(archive)
+    for i in np.array(population)[evenly_spaced_indexes]:
+        lineages.append([])
+        for ix in range(len(i['mutation_probs'])):
+            #print(i)
+            lineage = reconstruct_lineage(archive, i, ix)
+            lineages[-1].append(lineage)
+        open('%s/run_%d/lineage_report_%d.json' % (params['EXPERIMENT_NAME'], params['RUN'], lineage_count),  'w').write(json.dumps(lineages))
+        lineage_count += 1
+
+def reconstruct_lineage(archive, indiv, ix):
+    
+    to_add = [indiv['mutation_probs'][ix]]
+    if 'lineage' in indiv:
+        parent = archive[indiv['lineage'][ix]]
+        lineage = reconstruct_lineage(archive, parent, ix)
+        lineage.extend(to_add)
+        #print(indiv)
+        #print(f"Archive:, Lineage:{lineage}, Indiv:{indiv['id']}, Ix:{ix}")
+        return lineage
+    else:
+        return to_add
