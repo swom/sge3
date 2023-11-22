@@ -53,7 +53,7 @@ def save_lineage(archive, population, num_inds):
     evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)[-num_inds:]#first index is best ind which is always recorded so we can exclude it
     lineages = []
     lineage_count = 0
-    print(archive)
+    #print(archive)
     for i in np.array(population)[evenly_spaced_indexes]:
         lineages.append([])
         for ix in range(len(i['mutation_probs'])):
