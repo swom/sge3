@@ -1,0 +1,11 @@
+POPSIZE: 100
+GENERATIONS: 10
+ELITISM: 0                 # number of individuals that survive
+PROB_MUTATION: [0.0, 0.05, 0.1, 0.1, 0.08]
+TSIZE: 3
+INCLUDE_GENOTYPE: False
+SAVE_STEP: 10
+VERBOSE: False
+MIN_TREE_DEPTH: 10
+MAX_TREE_DEPTH: 10
+META_MUTATION: False
