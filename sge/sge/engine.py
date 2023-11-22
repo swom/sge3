@@ -18,6 +18,8 @@ def generate_random_individual():
     tree_depth = grammar.recursive_individual_creation(genotype, grammar.start_rule()[0], 0)
     if params['META_MUTATION']:
         return {'genotype': genotype, 'fitness': None, 'tree_depth' : tree_depth, 'mutation_probs': [params['PROB_MUTATION'] for _ in genotype]}
+    elif type(params['PROB_MUTATION']) == list:
+        return {'genotype': genotype, 'fitness': None, 'tree_depth' : tree_depth, 'mutation_probs': params['PROB_MUTATION']}
     else:
         return {'genotype': genotype, 'fitness': None, 'tree_depth' : tree_depth}
 
@@ -89,6 +91,10 @@ def evolutionary_algorithm(evaluation_function=None, parameters_file=None):
                 ni = tournament(population, params['TSIZE'])
             if params['META_MUTATION']:
                 ni = meta_mutation(ni)
+                ni = mutate_level(ni)
+            elif type(params['PROB_MUTATION']) == list:
+                assert len(params['PROB_MUTATION']) == len(ni['genotype'])
+                ni['mutation_probs'] = params['PROB_MUTATION']
                 ni = mutate_level(ni)
             else:
                 ni = mutate(ni, params['PROB_MUTATION'])
