@@ -6,6 +6,7 @@ from tqdm import tqdm
 from sge.operators.recombination import crossover
 from sge.operators.mutation import mutate, mutate_level
 from sge.operators.selection import tournament
+import copy 
 from sge.parameters import (
     params,
     set_parameters,
@@ -65,6 +66,18 @@ def meta_mutation(ind):
     ind['mutation_probs'] = new_p
     return ind
 
+def archive_update_elites(elite_population, archive):
+    new_population = []
+    for elite in elite_population:
+        id = len(archive)
+        new_elite = copy.deepcopy(elite)
+        new_elite['id'] = id 
+        new_elite['lineage'] = [elite['id'] for _ in elite['mutation_probs']]
+        archive[id] = new_elite
+        new_population.append(new_elite)
+    return new_population, archive
+
+
 def evolutionary_algorithm(evaluation_function=None, parameters_file=None):
     setup(parameters_file_path=parameters_file)
     population = list(make_initial_population())
@@ -85,6 +98,7 @@ def evolutionary_algorithm(evaluation_function=None, parameters_file=None):
         
 
         new_population = population[:params['ELITISM']]
+        new_population, archive = archive_update_elites(new_population, archive)
         while len(new_population) < params['POPSIZE']:
             if np.random.uniform() < params['PROB_CROSSOVER']:
                 p1 = tournament(population, params['TSIZE'])
