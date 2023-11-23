@@ -1,25 +1,77 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Launch for cluster",
-            "type": "python",
-            "cwd": "${workspaceRoot}/sge",
-            "request": "launch",
-            "program": "examples/symreg.py",
-            "console": "integratedTerminal",
-            "args": ["--experiment_name", "dumps/debug", "--parameters",
-             "parameters/standard.yml", "--grammar", "grammars/regression_pagie.pybnf",
-              "--gauss_sd", "0.1", "--prob_mutation_probs", "0.1",
-            "--prob_crossover", "0.9"],
-            "justMyCode": true,
-            "env": {
-              "PYTHONPATH": "${workspaceFolder}/sge/"
-            }
-         
-          }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch for cluster static",
+      "type": "python",
+      "cwd": "${workspaceRoot}/sge",
+      "request": "launch",
+      "program": "examples/symreg.py",
+      "console": "integratedTerminal",
+      "args": ["--experiment_name", "dumps/debug_static", 
+      "--parameters", "parameters/standard_static.yml", 
+       "--grammar", "grammars/regression_pagie.pybnf"
+        ],
+      "justMyCode": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/sge/"
+      }
+   
+    },
+    {
+      "name": "Launch for cluster",
+      "type": "python",
+      "cwd": "${workspaceRoot}/sge",
+      "request": "launch",
+      "program": "examples/symreg.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--experiment_name",
+        "dumps/debug",
+        "--parameters",
+        "parameters/standard.yml",
+        "--grammar",
+        "grammars/regression_pagie.pybnf",
+        "--gauss_sd",
+        "0.1",
+        "--prob_mutation_probs",
+        "0.1",
+        "--prob_crossover",
+        "0.9"
+      ],
+      "justMyCode": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/sge/"
+      }
+    },
+    {
+      "name": "Launch for cluster diff mut rate term",
+      "type": "python",
+      "cwd": "${workspaceRoot}/sge",
+      "request": "launch",
+      "program": "examples/symreg.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--experiment_name",
+        "dumps/debug",
+        "--parameters",
+        "parameters/m_parameters1.yml",
+        "--grammar",
+        "grammars/regression_pagie.pybnf",
+        "--gauss_sd",
+        "0.1",
+        "--prob_mutation_probs",
+        "0.1",
+        "--prob_crossover",
+        "0.9"
+      ],
+      "justMyCode": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/sge/"
+      }
+    }
+  ]
 }
