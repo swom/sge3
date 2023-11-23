@@ -19,7 +19,7 @@ def evolution_progress(generation, pop, archive):
     
     if generation % params['SAVE_STEP'] == 0:
         save_step(generation, pop, num_inds=5)
-        # save_lineage(archive, pop, 5, generation)
+        #save_lineage(archive, pop, 5, generation)
 
 
 def save_progress_to_file(data):
@@ -68,7 +68,7 @@ def save_lineage(archive, population, num_inds, gen):
 
 def reconstruct_lineage_mut_and_fit(archive, indiv, ix):
     
-    to_add = {'mut_rate': indiv['mutation_probs'][ix], 'fit':indiv['fitness']}
+    to_add = [{'mut_rate': indiv['mutation_probs'][ix], 'fit':indiv['fitness']}]
     if 'lineage' in indiv:
         parent = archive[indiv['lineage'][ix]]
         lineage = reconstruct_lineage_mut_and_fit(archive, parent, ix)
