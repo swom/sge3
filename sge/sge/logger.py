@@ -52,7 +52,8 @@ def prepare_dumps():
 
 def save_lineage(archive, population, num_inds, gen):
     to_save = []
-    evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)[-num_inds:]#first index is best ind which is always recorded so we can exclude it
+    evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)
+    
     lineages = []
     #print(archive)
     for i in np.array(population)[evenly_spaced_indexes]:
@@ -86,8 +87,6 @@ def reconstruct_lineage_fit(archive, indiv):
         parent = archive[indiv['lineage'][0]]
         lineage = reconstruct_lineage_fit(archive, parent)
         lineage.extend(to_add)
-        #print(indiv)
-        #print(f"Archive:, Lineage:{lineage}, Indiv:{indiv['id']}, Ix:{ix}")
         return lineage
     else:
         return to_add
