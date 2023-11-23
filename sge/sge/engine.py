@@ -81,8 +81,8 @@ def evolutionary_algorithm(evaluation_function=None, parameters_file=None):
                     archive[i['id']] = {'fitness': i['fitness'], 'id': i['id'], 'mutation_probs': i['mutation_probs'], 'lineage': i['lineage']}
         population.sort(key=lambda x: x['fitness'])
 
-        logger.evolution_progress(it, population)
-        logger.save_lineage(archive, population, 5)
+        logger.evolution_progress(it, population, archive)
+        
 
         new_population = population[:params['ELITISM']]
         while len(new_population) < params['POPSIZE']:
