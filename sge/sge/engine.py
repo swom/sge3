@@ -104,4 +104,6 @@ def evolutionary_algorithm(evaluation_function=None, parameters_file=None):
             new_population.append(ni)
         population = new_population
         it += 1
+    logger.save_lineage(population, archive, 5, it)#save lineages only at the end
+
 

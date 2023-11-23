@@ -19,7 +19,7 @@ def evolution_progress(generation, pop, archive):
     
     if generation % params['SAVE_STEP'] == 0:
         save_step(generation, pop, num_inds=5)
-        save_lineage(archive, pop, 5, generation)
+        # save_lineage(archive, pop, 5, generation)
 
 
 def save_progress_to_file(data):
