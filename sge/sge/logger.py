@@ -65,7 +65,7 @@ def save_lineage(archive, population, num_inds):
 
 def reconstruct_lineage(archive, indiv, ix):
     
-    to_add = [indiv['mutation_probs'][ix]]
+    to_add = {'mut_rate': indiv['mutation_probs'][ix], 'fit':indiv['fitness']}
     if 'lineage' in indiv:
         parent = archive[indiv['lineage'][ix]]
         lineage = reconstruct_lineage(archive, parent, ix)
