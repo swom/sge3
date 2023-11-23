@@ -11,6 +11,6 @@ pip install numpy
 pip install PyYAML
 pip install tqdm
 
-echo "dev: $1, meta: $2, start_mut_rate: $4, run: $3, crossover_rate: $5"
+echo "run: $1"
 
-python -m examples.symreg --experiment_name /scratch/p288427/megalomania/sge_m1 --run $3 --seed $3 --parameters parameters/m_parameters1.yml --grammar grammars/regression_pagie.pybnf --gauss_sd $1 --prob_mutation_probs $2  --prob_mutation $4 --prob_crossover $5
+python -m examples.symreg --experiment_name /scratch/p288427/megalomania/sge_m1 --run $1 --seed $1 --parameters parameters/m_parameters1.yml --grammar grammars/regression_pagie.pybnf
