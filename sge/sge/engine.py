@@ -73,7 +73,7 @@ def archive_update_elites(elite_population, archive):
         new_elite = copy.deepcopy(elite)
         new_elite['id'] = id 
         new_elite['lineage'] = [elite['id'] for _ in elite['mutation_probs']]
-        archive[id] = = {'fitness':new_elite['fitness'], 'id':new_elite['id'], 'mutation_probs': new_elite['mutation_probs'], 'lineage': new_elite['lineage']}
+        archive[id] = {'fitness':new_elite['fitness'], 'id':new_elite['id'], 'mutation_probs': new_elite['mutation_probs'], 'lineage': new_elite['lineage']}
 
         new_population.append(new_elite)
     return new_population, archive
