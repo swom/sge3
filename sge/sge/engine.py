@@ -16,12 +16,10 @@ import numpy as np
 def generate_random_individual():
     genotype = [[] for key in grammar.get_non_terminals()]
     tree_depth = grammar.recursive_individual_creation(genotype, grammar.start_rule()[0], 0)
-    if params['META_MUTATION']:
-        return {'genotype': genotype, 'fitness': None, 'tree_depth' : tree_depth, 'mutation_probs': [params['PROB_MUTATION'] for _ in genotype]}
-    elif type(params['PROB_MUTATION']) == list:
+    if type(params['PROB_MUTATION']) == list:
         return {'genotype': genotype, 'fitness': None, 'tree_depth' : tree_depth, 'mutation_probs': params['PROB_MUTATION']}
     else:
-        return {'genotype': genotype, 'fitness': None, 'tree_depth' : tree_depth}
+        return {'genotype': genotype, 'fitness': None, 'tree_depth' : tree_depth, 'mutation_probs': [params['PROB_MUTATION'] for _ in genotype]}
 
 def make_initial_population():
     for i in range(params['POPSIZE']):
@@ -77,10 +75,15 @@ def evolutionary_algorithm(evaluation_function=None, parameters_file=None):
             if i['fitness'] is None:
                 evaluate(i, evaluation_function)
                 i['id'] = len(archive)
-                archive[i['id']] = i
+                if it == 0: #in first gen we do not add lineage to archive since there is still no 'lineage' in individual
+                    archive[i['id']] = {'fitness':i['fitness'], 'id':i['id'], 'mutation_probs': i['mutation_probs']}
+                else:
+                    archive[i['id']] = {'fitness': i['fitness'], 'id': i['id'], 'mutation_probs': i['mutation_probs'], 'lineage': i['lineage']}
         population.sort(key=lambda x: x['fitness'])
+
         logger.evolution_progress(it, population)
         logger.save_lineage(archive, population, 5)
+
         new_population = population[:params['ELITISM']]
         while len(new_population) < params['POPSIZE']:
             if np.random.uniform() < params['PROB_CROSSOVER']:

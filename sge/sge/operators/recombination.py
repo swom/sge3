@@ -15,19 +15,19 @@ def crossover(p1, p2):
     for index, prob in enumerate(mask):
         if prob < xover_p_value:
             genotype.append(p1['genotype'][index][:])
-            if params['META_MUTATION']:
-                mutation_prob.append(p1['mutation_probs'][index])
-                mutation_lineage.append(p1['id'])
+            # if params['META_MUTATION']:
+            mutation_lineage.append(p1['id'])
+            mutation_prob.append(p1['mutation_probs'][index])
         else:
             genotype.append(p2['genotype'][index][:])
-            if params['META_MUTATION']:
-                mutation_prob.append(p2['mutation_probs'][index])
-                mutation_lineage.append(p2['id'])
+            # if params['META_MUTATION']:
+            mutation_prob.append(p2['mutation_probs'][index])
+            mutation_lineage.append(p2['id'])
 
     mapping_values = [0] * gen_size
     # compute nem individual
     _, tree_depth = grammar.mapping(genotype, mapping_values)
-    if params['META_MUTATION']:
-        return {'genotype': genotype, 'fitness': None, 'mapping_values': mapping_values, 'tree_depth': tree_depth, 'mutation_probs': mutation_prob, 'lineage': mutation_lineage}
-    else:
-        return {'genotype': genotype, 'fitness': None, 'mapping_values': mapping_values, 'tree_depth': tree_depth}
+    # if params['META_MUTATION']:
+    return {'genotype': genotype, 'fitness': None, 'mapping_values': mapping_values, 'tree_depth': tree_depth, 'mutation_probs': mutation_prob, 'lineage': mutation_lineage}
+    # else:
+    #     return {'genotype': genotype, 'fitness': None, 'mapping_values': mapping_values, 'tree_depth': tree_depth}
