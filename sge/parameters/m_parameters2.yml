@@ -2,6 +2,7 @@ POPSIZE: 100
 GENERATIONS: 10
 ELITISM: 0                 # number of individuals that survive
 PROB_MUTATION: [0.0, 0.05, 0.1, 0.1, 0.08]
+PROB_CROSSOVER: 0.9
 TSIZE: 3
 INCLUDE_GENOTYPE: False
 SAVE_STEP: 10
