@@ -56,7 +56,7 @@
       "console": "integratedTerminal",
       "args": [
         "--experiment_name",
-        "dumps/debug",
+        "dumps/debug_m",
         "--parameters",
         "parameters/m_parameters1.yml",
         "--grammar",
