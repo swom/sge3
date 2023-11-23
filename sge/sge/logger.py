@@ -5,7 +5,7 @@ import os
 
 
 
-def evolution_progress(generation, pop):
+def evolution_progress(generation, pop, archive):
     best=pop[0]
     fitness_samples = [i['fitness'] for i in pop]
     if params['META_MUTATION']:
@@ -16,8 +16,10 @@ def evolution_progress(generation, pop):
     if params['VERBOSE']:
         print(data)
     save_progress_to_file(data)
+    
     if generation % params['SAVE_STEP'] == 0:
         save_step(generation, pop, num_inds=5)
+        save_lineage(archive, pop, 5, generation)
 
 
 def save_progress_to_file(data):
@@ -48,27 +50,41 @@ def prepare_dumps():
         pass
     save_parameters()
 
-def save_lineage(archive, population, num_inds):
+def save_lineage(archive, population, num_inds, gen):
     to_save = []
     evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)[-num_inds:]#first index is best ind which is always recorded so we can exclude it
     lineages = []
-    lineage_count = 0
     #print(archive)
     for i in np.array(population)[evenly_spaced_indexes]:
-        lineages.append([])
-        for ix in range(len(i['mutation_probs'])):
-            #print(i)
-            lineage = reconstruct_lineage(archive, i, ix)
-            lineages[-1].append(lineage)
-        open('%s/run_%d/lineage_report_%d.json' % (params['EXPERIMENT_NAME'], params['RUN'], lineage_count),  'w').write(json.dumps(lineages))
-        lineage_count += 1
+        if params['META_MUTATION']:
+            lineages.append([])
+            for ix in range(len(i['mutation_probs'])):
+                #print(i)
+                lineage = reconstruct_lineage_mut_and_fit(archive, i, ix)
+                lineages[-1].append(lineage)
+        else:
+            lineages.append(reconstruct_lineage_fit(archive, i))
+    open('%s/run_%d/lineage_report_%d.json' % (params['EXPERIMENT_NAME'], params['RUN'], gen),  'w').write(json.dumps(lineages))
 
-def reconstruct_lineage(archive, indiv, ix):
+def reconstruct_lineage_mut_and_fit(archive, indiv, ix):
     
     to_add = {'mut_rate': indiv['mutation_probs'][ix], 'fit':indiv['fitness']}
     if 'lineage' in indiv:
         parent = archive[indiv['lineage'][ix]]
-        lineage = reconstruct_lineage(archive, parent, ix)
+        lineage = reconstruct_lineage_mut_and_fit(archive, parent, ix)
+        lineage.extend(to_add)
+        #print(indiv)
+        #print(f"Archive:, Lineage:{lineage}, Indiv:{indiv['id']}, Ix:{ix}")
+        return lineage
+    else:
+        return to_add
+
+def reconstruct_lineage_fit(archive, indiv):
+    
+    to_add = [indiv['fitness']]
+    if 'lineage' in indiv:
+        parent = archive[indiv['lineage'][0]]
+        lineage = reconstruct_lineage_fit(archive, parent)
         lineage.extend(to_add)
         #print(indiv)
         #print(f"Archive:, Lineage:{lineage}, Indiv:{indiv['id']}, Ix:{ix}")
