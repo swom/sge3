@@ -13,6 +13,7 @@ from sge.parameters import (
     load_parameters
 )
 import numpy as np
+sys.setrecursionlimit(1500) #to allow for lineages to be reconstructed    
 
 def generate_random_individual():
     genotype = [[] for key in grammar.get_non_terminals()]

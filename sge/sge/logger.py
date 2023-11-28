@@ -2,6 +2,7 @@ import numpy as np
 from sge.parameters import params
 import json
 import os
+import sys
 
 
 
@@ -51,9 +52,7 @@ def prepare_dumps():
     save_parameters()
 
 def save_lineage(archive, population, num_inds, gen):
-    to_save = []
     evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)
-    
     lineages = []
     #print(archive)
     for i in np.array(population)[evenly_spaced_indexes]:
