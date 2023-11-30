@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=12:10:00
+#SBATCH --time=24:10:00
 #SBATCH --mem=2GB
 #SBATCH --job-name=sge_job
 #SBATCH --output=logs/sge_job%j.log
