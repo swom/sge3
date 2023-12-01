@@ -30,7 +30,7 @@ def save_progress_to_file(data):
 
 def save_step(generation, population, num_inds):
     to_save = []
-    evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)[-num_inds:]#first index is best ind which is always recorded so we can exclude it
+    evenly_spaced_indexes = np.round(np.linspace(0, len(population) - 1, num_inds + 1)).astype(int)
     for i in np.array(population)[evenly_spaced_indexes]:
         if params['META_MUTATION']:
             to_save.append({"fitness": i['fitness'], "phenotype": i['phenotype'], "mutation_probs": i["mutation_probs"]})
