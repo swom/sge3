@@ -27,13 +27,7 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test Engine
         run: |
-          pytest test/test_engine.py
-      - name: Test Random
+          pytest tests/test_engine.py
+      - name: Test Utilities
         run: |
-          pytest test/test_random.py
-      - name: Test Torch
-        run: |
-          pytest test/test_torch.py
-      - name: Test Long
-        run: |
-          pytest test/test_long.py
+          pytest tests/test_utilities.py
